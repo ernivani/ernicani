@@ -1,90 +1,107 @@
 const Discord = require('discord.js');
-const lowdb = require("lowdb")
 
 
 var bot = new Discord.Client();
-var prefix = (";");
+var prefix = ("*");
 var randnum = 0;
+var blague = ("test");
+var joue =("[*help] pour la page d'aide")
+var dispatcher;
 
 bot.on('ready',() => {
-    
+bot.user.setPresence({ game: { name:joue, type: 0}});
     console.log("Bot Ready !");
 });
 
-bot.login("NTE5NTY2NzY1NDgzODg0NTU0.Duxu0g.AxAz7WraLM3AOihVbw_IBcalsSg");
+bot.login("prcocess.env.TOKEN");
 
-bot.on("message", message => {  
-    
-    
-    if (message.content === ";ping"){
-    message.reply("pong");
+bot.on("message", message => {
+
+
+    if (message.content === prefix + "ping"){
+        message.delete(prefix + "ping")
+    message.reply("pont un oeuf");
     console.log('ping pong');
 }
 
-if (message.content === ";help"){
-message.channel.sendMessage(":hammer: **Page d'aide :**\n \n :smile: **Commandes de base :**\n ``;help 1``\n**:game_die: Commandes Fun :**\n``;help 2``\n **:space_invader: Commandes Jeux **:\n ``;help 3``\n **:beginner: Commandes Staff :**\n``;help 4`` \n");
-console.log('help');
-}
-
-if (message.content === ";help 1"){
-    message.channel.sendMessage("```page d'aide pour les Commandes de base```\n \n :point_right: **Commande Profile** \n ``;p`` ou ``;profile``");
-    console.log('help 1');
+    if(message.content === "Bonjour"){
+        message.reply("Salut");
+        console.log('Le bot dit bonjour');
     }
 
-
-if (message.content === "ca va ?")
-
-    if (randnum = 1){
-        message.reply("Oui, Merci je vais très bien !");
-        console.log(random);
+    if(message.content === prefix + "help") {
+      message.delete("*help") 
+      var aide_embed = new Discord.RichEmbed()
+      .setColor('RANDOM')
+      .setTitle(`:robot: Voici mes catégories d'aide !`)
+      .setDescription(`Voici mes commandes disponible :`)
+      .setThumbnail(message.author.avatarURL)
+      .addField(":tools: Modération", "Fais `*help 1 ` pour voir mes commandes de modération !")
+      .addField(":tada: Fun", "Fais `*help 2 ` pour voir mes commandes d'animation !")
+      .addField(":sound: musique", "fais`*help 3 ` pour voir mes commandes musicales")
+      .addField(":8ball: Autre", "fais`*help 4 ` pour voir mes commandes diverses")
+      
+      .setFooter("menu d'aide fais par ernicani")
+      .setTimestamp("")
+      message.channel.send(aide_embed);
     }
 
-    if (randnum == 2){
-        message.reply("non,Je vais pas très bien")
-        console.log(random);
-}
-
-if (message.content === "cava ?")
-
-if (randnum = 1){
-    message.reply("Oui, Merci je vais très bien !");
-    console.log(random);
-}
-
-if (randnum == 2){
-    message.reply("non,Je vais pas très bien")
-    console.log(random);
-}
-
-if (message.content === "sa va ?")
-
-if (randnum = 1){
-    message.reply("Oui, Merci je vais très bien !");
-    console.log(random);
-}
-
-if (randnum == 2){
-    message.reply("non,Je vais pas très bien")
-    console.log(random);
-}
-
-if (message.content === ";p"){
-    message.channel.sendMessage("profile");
-    console.log('profile');
+    if(message.content === prefix + "help 1") {
+      message.delete("*help 1") 
+      var mod_embed = new Discord.RichEmbed()
+      .setColor('RANDOM')
+      .setTitle(`:tools: Voici mes commandes modérations !`)
+      .setThumbnail(message.author.avatarURL)
+      .addField("*kick <@user>", "Kick l'utilisateur !")
+      .addField("*ban <@user>", "Ban l'utilisateur !")
+      .addField("*clear nombre", "Supprime le nombre de messages indiqué")
+      .addField("*mute <@user>", "Mute l'utilisateur mentionné")
+      .addField("*unmute <@user>", "Unmute l'utilisateur mentionné")
+      .setFooter("menu d'aide fais par ernicani")
+      message.channel.send(mod_embed);
     }
 
-    if (message.content === ";profile"){
-        message.channel.sendMessage("profile");
-        console.log('profile');
-        }
-    
+    if(message.content === prefix + "help 2") {
+      message.delete("*help 2") 
+      var fun_embed = new Discord.RichEmbed()
+      .setColor('RANDOM')
+      .setTitle(`:tools: Voici mes commandes amusantes !`)
+      .setThumbnail(message.author.avatarURL)
+      .addField("Bonjour", "Le bot répond !")
+      .addField("*stats", "Le bot vous envoie des informations sur votre profil !")
+      .addField("*info", "Donne des indormations sur le bot et le serveur !")
+      .setFooter("menu d'aide fais par ernicani")
+      .setTimestamp()
+      message.channel.send(fun_embed);
+    }
+    if(message.content === prefix + "help 4") {
+      message.delete("*help 4") 
+      var fun_embed = new Discord.RichEmbed()
+      .setColor('RANDOM')
+      .setTitle(`:tools: Voici mes commandes diverses !`)
+      .setThumbnail(message.author.avatarURL)
+      .addField("*ping", "teste la lantence du bot")
+      .addField("a venir", "...")
+      .addField("a venir", "...")
+      .setFooter("menu d'aide fais par ernicani")
+      .setTimestamp()
+      message.channel.send(fun_embed);
+    }
 
+    if(message.content === prefix + "help 3") {
+      message.delete("*help 3") 
+      var fun_embed = new Discord.RichEmbed()
+      .setColor('RANDOM')
+      .setTitle(`:tools: Voici mes commandes musicales !`)
+      .setThumbnail(message.author.avatarURL)
+      .addField("*play", "mettre de la musique")
+      .addField("a venir", "...")
+      .addField("a venir", "...")
+      .setFooter("menu d'aide fais par ernicani")
+      .setTimestamp()
+      message.channel.send(fun_embed);
+    }
 
+      
 
-}); 
-
-function random(min, max) {
-min = math.cell(0);
-max = math.floor(5);
-randnum = math.floor(marg.random() * (max - min +1) + min);
-}
+  });
